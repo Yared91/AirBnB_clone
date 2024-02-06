@@ -5,8 +5,8 @@ from models.base_model import BaseModel
 
 class State(BaseModel):
 	"""
-		Attribute:
-                    name: Name of the state
-	"""
+        Attribute:
+        name: Name of the state
+        """
 
-	 name = ""
+        name = ""

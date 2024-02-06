@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-""" Amenity Class """
+""" Amenity Class."""
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-	"""
-		Attributes:
-		 name: empty string
-	"""
-	 name = ""
+    """
+    Attributes:
+    name: empty string
+    """
+
+    name = ""
