@@ -8,42 +8,42 @@ import unittest
 
 
 class TestUser(unittest.TestCase):
-	""" testing Amenity Class"""
-	@classmethod
-	def setUpClass(cls):
-		cls.my_amenity = Amenity()
-		cls.my_amenity.name = "Serenity"
+    """ testing Amenity Class"""
+    @classmethod
+    def setUpClass(cls):
+        cls.my_amenity = Amenity()
+        cls.my_amenity.name = "Serenity"
 
-	@classmethod
-	def tearDownClass(cls):
-		del cls.my_amenity
-		try:
-		    os.remove("file.json")
-		except FileNotFoundError:
-		    return
+    @classmethod
+    def tearDownClass(cls):
+        del cls.my_amenity
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            return
 
-	def test_check_attributes_string(self):
-		self.assertEqual(str, type(self.my_amenity.name))
-	
-	def test_check_attributes_present(self):
-		attributes = ["name", "id", "created_at", "updated_at"]
-		for attribute in attributes:
-		self.assertIn(attribute, self.my_amenity.__dict__)
+    def test_check_attributes_string(self):
+        self.assertEqual(str, type(self.my_amenity.name))
 
-	def test_check_func(self):
-		"""cheking if Amenity has Docstring"""
-		self.assertIsNotNone(Amenity.__doc__)
+    def test_check_attributes_present(self):
+        attributes = ["name", "id", "created_at", "updated_at"]
+        for attribute in attributes:
+            self.assertIn(attribute, self.my_amenity.__dict__)
 
-	def test_check_subclass(self):
-		"""checking for subclass in the Supper class"""
-		self.assertTrue(issubclass(self.my_amenity.__class__, BaseModel))
+    def test_check_func(self):
+        """cheking if Amenity has Docstring"""
+        self.assertIsNotNone(Amenity.__doc__)
 
-	def test_save(self):
-		self.my_amenity.save()
-		self.assertNotEqual(self.my_amenity.created_at, self.my_amenity.updated_at)
+    def test_check_subclass(self):
+        """checking for subclass in the Supper class"""
+        self.assertTrue(issubclass(self.my_amenity.__class__, BaseModel))
 
-	def test_to_dict(self):
-		self.assertTrue(hasattr(self.my_amenity, "to_dict")
-	
+    def test_save(self):
+        self.my_amenity.save()
+        self.assertNotEqual(self.my_amenity.created_at, self.my_amenity.updated_at)
+
+    def test_to_dict(self):
+        self.assertTrue(hasattr(self.my_amenity, "to_dict")
+
 if __name__ == "__main__":
-    unittest.main()
+unittest.main()
