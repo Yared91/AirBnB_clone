@@ -8,6 +8,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 import json
+import models
 
 
 class FileStorage:
