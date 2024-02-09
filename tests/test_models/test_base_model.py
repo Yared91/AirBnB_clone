@@ -53,5 +53,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(BaseModel, "to_dict"))
         self.assertTrue(callable(BaseModel.to_dict))
 
+
 if __name__ == "__main__":
     unittest.main()

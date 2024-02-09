@@ -45,5 +45,6 @@ class TestUser(unittest.TestCase):
     def test_to_dict(self):
         self.assertTrue(hasattr(self.my_state, "to_dict")
 
+
 if __name__ == "__main__":
     unittest.main()
