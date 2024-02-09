@@ -155,5 +155,46 @@ class HBNBCommand(cmd.Cmd):
         """parses the command entered"""
         return tuple(line.split())
 
+    def default(self, line):
+        """handles errors and runs previous commands"""
+        arg = line.split('.')
+        subarg = arg[0]
+
+        if len(arg) == 1:
+            print("*** Unknown syntax: {}".format(line))
+            return
+        try:
+            arg = arg[1].split('(')
+            cmds = arg[0]
+
+            command_mapping = {
+                    'all': HBNBCommand.do_all,
+                    'count': HBNBCommand.do_count,
+                    'show': HBNBCommand.do_show,
+                    'destroy': HBNBCommand.do_destroy,
+                    'update': HBNBCommand.do_update
+                    }
+            if cmds in command_mapping:
+                if cmds == 'show' or cmds == 'destroy':
+                    arg = arg[1].split(')')
+                    num = arg[0].strip("'").strip('"')
+                    arg = subarg + ' ' + num
+                    command_mapping[cmds](self, arg)
+                elif cmds == 'update':
+                    arg = arg[1].split(',')
+                    num = arg[0].strip("'").strip('"')
+                    name1 = arg[1].strip()
+                    name2 = arg[2].strip().strip(')')
+                    arg = subarg + ' ' + num + ' ' + name1 + ' ' + name2
+                    command_mapping[cmds](self, arg)
+                else:
+                    command_mapping[cmds](self, subarg)
+            else:
+                print("*** Unknown syntax: {}".format(line))
+        except IndexError:
+            print("*** Unknown syntax: {}".format(line))
+
+
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
