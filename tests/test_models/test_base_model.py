@@ -4,6 +4,7 @@ from models.base_model import BaseModel
 import unittest
 import models
 import os
+import pep8
 
 
 class TestBaseModel(unittest.TestCase):
@@ -21,6 +22,12 @@ class TestBaseModel(unittest.TestCase):
             os.remove("file.json")
         except FileNotFoundError:
             return
+
+    def test_pycodstyle(self):
+	    """test the pycode style"""
+		    format = pep8.StyleGuide(quiet=True)
+		    py = format.check_files(['models/base_model.py'])
+		    self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_save(self):
         """checking created_at and updated_at date aren't equal"""
