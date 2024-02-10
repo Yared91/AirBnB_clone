@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Unittesting for FileStorage"""
+"""Unittest for FileStorage"""
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -25,10 +25,10 @@ class TestFileStorage(unittest.TestCase):
         cls.my_review.text = "First"
 
     @classmethod
-    def teardown(cls):
+    def tearDownClass(cls):
         del cls.my_review
 
-    def teardown(self):
+    def tearDown(self):
         try:
             os.remove("file.json")
         except:
@@ -36,8 +36,8 @@ class TestFileStorage(unittest.TestCase):
 
     def test_pycodestyle(self):
         """test the pycode style"""
-        format = pep8.StyleGuide(quiet=True)
-        py = format.check_files(['models/engine/file_storage.py'])
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/engine/file_storage.py'])
         self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_all(self):
@@ -59,7 +59,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsNotNone(dict_insts.get(key))
 
     def test_reload(self):
-        """testing reloding of obj from string file json"""
+        """testing reloading of obj from string file json"""
         jstorage = FileStorage()
         """removes file if present"""
         try:
@@ -76,13 +76,13 @@ class TestFileStorage(unittest.TestCase):
         """Assert the reload that return None"""
         self.assetIs(jstorage.reload(), None)
 
-    def test_errorhandle_reload(self):
-        """test if it handle the Error in reload"""
+    def test_errorhandler_reload(self):
+        """test if it handles the Error in reload"""
         self.assertRaises(FileNotFoundError, models.storage.reload())
 
     def test_save(self):
         model_to_test = [BaseModel(), User(), State(), Place(),
-        City(), Amenity(), Review()]
+                         City(), Amenity(), Review()]
 
         for model in model_to_test:
             models.storage.new(model)
@@ -95,6 +95,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save_arg(self):
         with self.assertRaises(TypeError):
             models.storage.save(None)   
+
 
 if __name__ == "__main__":
     unittest.main()

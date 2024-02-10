@@ -25,8 +25,8 @@ class TestUser(unittest.TestCase):
 
     def test_pycodestyle(self):
         """test the pycode style"""
-        format = pep8.StyleGuide(quiet=True)
-        py = format.check_files(['models/state.py'])
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/state.py'])
         self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
@@ -38,7 +38,7 @@ class TestUser(unittest.TestCase):
             self.assertIn(attribute, self.my_user.__dict__)
 
     def test_check_func(self):
-        """cheking if State has Docstring"""
+        """checking if State has Docstring"""
         self.assertIsNotNone(State.__doc__)
 
     def test_check_subclass(self):
@@ -50,7 +50,7 @@ class TestUser(unittest.TestCase):
         self.assertNotEqual(self.my_state.created_at, self.my_state.updated_at)
 
     def test_to_dict(self):
-        self.assertTrue(hasattr(self.my_state, "to_dict")
+        self.assertTrue(hasattr(self.my_state, "to_dict"))
 
 
 if __name__ == "__main__":

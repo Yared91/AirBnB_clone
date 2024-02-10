@@ -12,10 +12,10 @@ import cmd
 
 
 class HBNBCommand(cmd.Cmd):
-    """Runs the command processers"""
+    """Runs the command processors"""
     prompt = "(hbnb)"
     classes = {"BaseModel", "User", "State", "City", "Amenity",
-            "Place", "Review"}
+               "Place", "Review"}
 
     def do_EOF(self, line):
         """shows end of a file"""
@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """if the line is empty call emptyline"""
+        """if the line is empty call empty line"""
         pass
 
     def do_create(self, line):
@@ -39,9 +39,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
         else:
-            occurence = eval(line)()
-            occurence.save()
-            print(occurence.id)
+            occurrence = eval(line)()
+            occurrence.save()
+            print(occurrence.id)
 
     def do_show(self, line):
         """Prints a string of an instance based on class name and id"""
@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         arg = parse(line)
-        elif arg[0] not in HBNBCommand.classes:
+        if arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
@@ -60,7 +60,7 @@ class HBNBCommand(cmd.Cmd):
             return
         read = "{}.{}".format(arg[0], arg[1])
 
-        elif read not in store.keys():
+        if read not in store.keys():
             print("** no instance found **")
 
         else:
@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             return
         arg = parse(line)
 
-        elif arg[0] not in HBNBCommand.classes:
+        if arg[0] not in HBNBCommand.classes:
             print ("** class doesn't exist **")
             return
 
@@ -84,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
             return
         read = "{}.{}".format(arg[0], arg[1])
 
-        elif read not in store.keys():
+        if read not in store.keys():
             print("** no instance found **")
 
         else:
@@ -94,19 +94,19 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """Prints all instances based or not on the class name"""
         arg = parse(line)
-        newlist = []
+        new_list = []
         store = storage.all()
 
         if len(line) == 0:
             for i in store.values():
-                newlist.append(i)
-                print(newlist)
+                new_list.append(i)
+                print(new_list)
 
         elif arg[0] in HBNBCommand.classes:
             for k, i in store.items():
                 if arg[0] in k:
-                    newlist.append(i)
-                    print(newlist)
+                    new_list.append(i)
+                    print(new_list)
                 else:
                     print("** class doesn't exist **")
 
@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
                 return
         elif len(arg) >= 4:
             key = f"{arg[0]}.{arg[1]}"
-            check = type(eval(value))
+            check = type(eval(arg[3]))
             value = value.strip('"').strip("'")
             setattr(store[key], arg[2], check(value))
             store[key].save()
@@ -193,7 +193,6 @@ class HBNBCommand(cmd.Cmd):
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
             print("*** Unknown syntax: {}".format(line))
-
 
 
 if __name__ == "__main__":

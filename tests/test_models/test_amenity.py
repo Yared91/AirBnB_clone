@@ -25,10 +25,9 @@ class TestUser(unittest.TestCase):
 
     def test_pycodestyle(self):
         """test the pycode style"""
-        format = pep8.StyleGuide(quiet=True)
-        py = format.check_files(['models/amenity.py'])
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/amenity.py'])
         self.assertEquall(py.total_errors, 0, "fix pep8")
-
 
     def test_check_attributes_string(self):
         self.assertEqual(str, type(self.my_amenity.name))
@@ -51,7 +50,7 @@ class TestUser(unittest.TestCase):
         self.assertNotEqual(self.my_amenity.created_at, self.my_amenity.updated_at)
 
     def test_to_dict(self):
-        self.assertTrue(hasattr(self.my_amenity, "to_dict")
+        self.assertTrue(hasattr(self.my_amenity, "to_dict"))
 
 
 if __name__ == "__main__":

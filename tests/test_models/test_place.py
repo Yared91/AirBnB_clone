@@ -14,7 +14,7 @@ class TestUser(unittest.TestCase):
     def setUpClass(cls):
         cls.my_place = Place()
         cls.my_place.city_id = "Bahamas"
-        cls.my_place.user_id = "Maldevis"
+        cls.my_place.user_id = "Maldives"
         cls.my_place.name = "The Beach"
         cls.my_place.description = "Heaven on Earth"
         cls.my_place.number_rooms = 0
@@ -35,8 +35,8 @@ class TestUser(unittest.TestCase):
 
     def test_pycodestyle(self):
         """test the pycode style"""
-        format = pep8.StyleGuide(quiet=True)
-        py = format.check_files(['models/place.py'])
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/place.py'])
         self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
@@ -54,13 +54,13 @@ class TestUser(unittest.TestCase):
 
     def test_check_attributes_present(self):
         attributes = ["city_id", "user_id", "name", "id", "created_at",
-                "updated_at", "description", "number_rooms", "number_bathrooms"
-                ,"max_guest", "price_by_night", "latitude", "longitude", "amenity_ids"]
+                      "updated_at", "description", "number_rooms", "number_bathrooms",
+                      "max_guest", "price_by_night", "latitude", "longitude", "amenity_ids"]
         for attribute in attributes:
             self.assertIn(attribute, self.my_place.__dict__)
 
     def test_check_func(self):
-        """cheking if Place has Docstring"""
+        """checking if Place has Docstring"""
         self.assertIsNotNone(Place.__doc__)
 
     def test_check_subclass(self):
@@ -72,7 +72,7 @@ class TestUser(unittest.TestCase):
         self.assertNotEqual(self.my_place.created_at, self.my_place.updated_at)
 
     def test_to_dict(self):
-        self.assertTrue(hasattr(self.my_place, "to_dict")
+        self.assertTrue(hasattr(self.my_place, "to_dict"))
 
 
 if __name__ == "__main__":

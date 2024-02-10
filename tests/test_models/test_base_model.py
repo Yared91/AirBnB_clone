@@ -25,8 +25,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_pycodstyle(self):
         """test the pycode style"""
-        format = pep8.StyleGuide(quiet=True)
-        py = format.check_files(['models/base_model.py'])
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/base_model.py'])
         self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_save(self):
@@ -46,7 +46,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(isinstance(my_model_dict["updated_at"], str))
 
     def test_check_fun(self):
-        """cheking if functions have docstring"""
+        """checking if functions have docstring"""
         self.assertIsNotNone(BaseModel.__doc__)
         self.assertIsNotNone(BaseModel.save.__doc__)
         self.assertIsNotNone(BaseModel.to_dict.__doc__)

@@ -36,13 +36,13 @@ class TestConsole(unittest.TestCase):
 
     def test_console_pycodestyle(self):
         """test the console pycode style"""
-        format = pep8.StyleGuide(quiet=False)
+        style = pep8.StyleGuide(quiet=False)
         faults = 0
-        faults = faults + format.check_files(['console.py']).total_errors
+        faults = faults + style.check_files(['console.py']).total_errors
         self.assertEquall(faults, 0, "fix pep8")
 
     def test_emptyline(self):
-        """tastes when an emptyline is entered"""
+        """tastes when an empty line is entered"""
         with patch('sys.stdout', new=StringIO()) as output:
             self.commands.onecmd("\n")
             self.assertEqual(output.getvalue(), '')

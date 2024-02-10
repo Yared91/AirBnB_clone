@@ -27,8 +27,8 @@ class TestUser(unittest.TestCase):
 
     def test_pycodestyle(self):
         """test the pycode style"""
-        format = pep8.StyleGuide(quiet=True)
-        py = format.check_files(['models/review.py'])
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/review.py'])
         self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
@@ -38,12 +38,12 @@ class TestUser(unittest.TestCase):
 
     def test_check_attributes_present(self):
         attributes = ["place_id", "id", "created_at", "updated_at",
-                "user_id", "text"]
+                      "user_id", "text"]
         for attribute in attributes:
             self.assertIn(attribute, self.my_review.__dict__)
 
     def test_check_func(self):
-        """cheking if Review has Docstring"""
+        """checking if Review has Docstring"""
         self.assertIsNotNone(Review.__doc__)
 
     def test_check_subclass(self):
@@ -53,10 +53,10 @@ class TestUser(unittest.TestCase):
     def test_save(self):
         self.my_review.save()
         self.assertNotEqual(self.my_review.created_at,
-                self.my_review.updated_at)
+                            self.my_review.updated_at)
 
     def test_to_dict(self):
-        self.assertTrue(hasattr(self.my_review, "to_dict")
+        self.assertTrue(hasattr(self.my_review, "to_dict"))
 
 
 if __name__ == "__main__":
