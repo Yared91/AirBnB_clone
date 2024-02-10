@@ -36,24 +36,24 @@ class BaseModel:
             self.updated_at = datetime.now()
             models.storage.new(self)
 
-        def __str__(self):
-            """Prints styles string."""
+    def __str__(self):
+        """Prints styles string."""
 
-            name = self.__class__.__name__
-            return "[{}] ({}) {}".format(name, self.id, self.__dict__)
+        name = self.__class__.__name__
+        return "[{}] ({}) {}".format(name, self.id, self.__dict__)
 
-        def save(self):
-            """updates the public instance attribute."""
+    def save(self):
+        """updates the public instance attribute."""
 
-            self.updated_at = datetime.now()
-            models.storage.save()
+        self.updated_at = datetime.now()
+        models.storage.save()
 
-        def to_dict(self):
-            """returns dictionary containing all keys/values."""
+    def to_dict(self):
+        """returns dictionary containing all keys/values."""
 
-            new_dict = {
-                    "created_at": self.created_at.isoformat(),
-                    "updated_at": self.updated_at.isoformat(),
-                    "__class__": self.__class__.__name__
-                    }
-            return new_dict
+        new_dict = {
+                "created_at": self.created_at.isoformat(),
+                "updated_at": self.updated_at.isoformat(),
+                "__class__": self.__class__.__name__
+                }
+        return new_dict
