@@ -5,6 +5,7 @@ from models.state import State
 import models
 import os
 import unittest
+import pep8
 
 
 class TestUser(unittest.TestCase):
@@ -21,6 +22,12 @@ class TestUser(unittest.TestCase):
             os.remove("file.json")
         except FileNotFoundError:
             return
+
+    def test_pycodestyle(self):
+        """test the pycode style"""
+        format = pep8.StyleGuide(quiet=True)
+        py = format.check_files(['models/state.py'])
+        self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
         elf.assertEqual(str, type(self.my_state.name))

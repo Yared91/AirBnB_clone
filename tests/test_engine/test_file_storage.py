@@ -12,6 +12,7 @@ import unittest
 import os
 import json
 import models
+import pep8
 
 
 class TestFileStorage(unittest.TestCase):
@@ -32,6 +33,12 @@ class TestFileStorage(unittest.TestCase):
             os.remove("file.json")
         except:
             pass
+
+    def test_pycodestyle(self):
+        """test the pycode style"""
+        format = pep8.StyleGuide(quiet=True)
+        py = format.check_files(['models/engine/file_storage.py'])
+        self.assertEquall(py.total_errors, 0, "fix pep8")
 
     def test_all(self):
         """testes if it returns the dictonary"""

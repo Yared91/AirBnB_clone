@@ -25,6 +25,12 @@ class TestUser(unittest.TestCase):
         except FileNotFoundError:
             return
 
+    def pycodestyle(self):
+        """test the pycode style"""
+        format = pep8.StyleGuide(quiet=True)
+        py = format.check_files(['models/user.py'])
+        self.assertEquall(py.total_errors, 0, "fix pep8")
+
     def test_check_attributes_string(self):
         self.assertEqual(str, type(self.my_user.first_name))
         self.assertEqual(str, type(self.my_user.last_name))
