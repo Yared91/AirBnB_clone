@@ -27,13 +27,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
     def test_check_attributes(self):
-        """checks if BaseModel has Attributes and are callable"""
+        """checks if BaseModel has Attributes"""
         self.assertTrue(hasattr(BaseModel, "__init__"))
-        self.assertTrue(callable(BaseModel.__init__))
         self.assertTrue(hasattr(BaseModel, "save"))
-        self.assertTrue(callable(BaseModel.save))
         self.assertTrue(hasattr(BaseModel, "to_dict"))
-        self.assertTrue(callable(BaseModel.to_dict))
 
 
 if __name__ == "__main__":

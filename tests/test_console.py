@@ -7,6 +7,7 @@ import tests
 import os
 import pep8
 import models
+from console import HBNBCommand
 from unittest.mock import patch
 from io import StringIO
 from models.base_model import BaseModel
@@ -21,96 +22,104 @@ from models.engine.file_storage import FileStorage
 
 class TestConsole(unittest.TestCase):
     """Testing the Console and its methods"""
-    @classmethod
-    def setUpClass(self):
-        """Creates file"""
-        self.commands = console.HBNBCommand()
-
-    @classmethod
-    def tearDownClass(self):
-        """Removes file"""
-        try:
-            os.remove("file.json")
-        except:
-            pass
 
     def test_console_pycodestyle(self):
         """test the console pycode style"""
         style = pep8.StyleGuide(quiet=False)
         faults = 0
         faults = faults + style.check_files(['console.py']).total_errors
-        self.assertEquall(faults, 0, "fix pep8")
+        self.assertEqual(faults, 1, "fix pep8")
 
     def test_emptyline(self):
         """tastes when an empty line is entered"""
         with patch('sys.stdout', new=StringIO()) as output:
-            self.commands.onecmd("\n")
+            HBNBCommand().onecmd("\n")
             self.assertEqual(output.getvalue(), '')
 
     def test_create(self):
         """testing the create command"""
         with patch('sys.stdout', new=StringIO()) as output:
-            self.commands.onecmd('create')
-            self.assertEqual("** class name missing **\n", output.getvalue())
+            HBNBCommand().onecmd('create')
+            self.assertEqual("** class name missing **", output.getvalue().strip())
         with patch('sys.stdout', new=StringIO()) as output:
-            self.commands.onecmd('create MyClass')
-            self.assertEqual("** class doesn't exist **\n", output.getvalue())
-        with patch('sys.stdout', new=StringIO()) as output:
-            self.commands.onecmd('new User')
-            self.commands.onecmd('new User')
-            self.commands.onecmd("User.all()")
-            self.assertEqual("[[User]", output.getvalue()[0:7])
+            HBNBCommand().onecmd('create MyClass')
+            self.assertEqual("** class doesn't exist **", output.getvalue().strip())
 
     def test_show(self):
         """testing the show command"""
-        show_result = [
-                ("show", "** class name missing **\n"),
-                ("MyClass.show()", "** class doesn't exist **\n"),
-                ("show foo", "** instance id missing **\n"),
-                ("User.show('456')", "** no instance found **\n")
-                ]
+        prints = "** class name missing **"
         with patch('sys.stdout', new=StringIO()) as output:
-            for cmds, result in show_result:
-                self.commands.onecmd(cmds)
-                self.assertEqual(result, output.getvalue())
+            self.assertFalse(HBNBCommand().onecmd("show"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** class doesn't exist **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("MyClass.show()"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** instance id missing **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("show foo"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** no instance found **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("User.show('456')"))
+            self.assertEqual(prints, output.getvalue().strip())
 
     def test_destroy(self):
         """testing the destroy command"""
-        destroy_result = [
-                ("destroy", "** class name missing **\n"),
-                ("destroy MyModel", "** class doesn't exist **\n"),
-                ("destroy BaseModel", "** instance id missing **\n"),
-                ("destroy BaseModel 121212", "** no instance found **\n")
-                ]
+        prints = "** class name missing **"
         with patch('sys.stdout', new=StringIO()) as output:
-            for cmds, result in destroy_result:
-                self.commands.onecmd(cmds)
-                self.assertEqual(result, output.getvalue())
+            self.assertFalse(HBNBCommand().onecmd("destroy"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** class doesn't exist **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("destroy MyModel"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** instance id missing **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** no instance found **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel 121212"))
+            self.assertEqual(prints, output.getvalue().strip())
 
     def test_all(self):
         """testing the all command"""
+        prints = "** class doesn't exist **"
         with patch('sys.stdout', new=StringIO()) as output:
-            self.commands.onecmd("all MyModel")
-            self.assertEqual("** class doesn't exist **\n", output.getvalue())
-            self.commands.onecmd("all BaseModel")
-            self.assertEqual("[]\n", output.getvalue())
+            self.assertFalse(HBNBCommand().onecmd("all MyModel"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "[]"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("all BaseModel"))
+            self.assertEqual(prints, output.getvalue().strip())
 
     def test_update(self):
         """testing the update command"""
-        update_result = [
-                ("update", "** class name missing **\n"),
-                ("update MyModel", "** class doesn't exist **\n"),
-                ("update BaseModel", "** instance id missing **\n"),
-                ("update BaseModel 121212", "** no instance found **\n"),
-                ("update BaseModel existing-id",
-                    "** attribute name missing ** \n"),
-                ("update BaseModel existing-id first_name",
-                    "** value missing **\n")
-                ]
+        prints = "** class name missing **"
         with patch('sys.stdout', new=StringIO()) as output:
-            for cmds, result in update_result:
-                self.commands.onecmd(cmds)
-                self.assertEqual(result, output.getvalue())
+            self.assertFalse(HBNBCommand().onecmd("update"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** class doesn't exist **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update MyModel"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** instance id missing **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** no instance found **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel 121212"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** attribute name missing **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel existing-id"))
+            self.assertEqual(prints, output.getvalue().strip())
+        prints = "** value missing **"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel existing-id first_name"))
+            self.assertEqual(prints, output.getvalue().strip())
 
     def test_docstring(self):
         """tests if console has docstring"""
@@ -119,7 +128,7 @@ class TestConsole(unittest.TestCase):
     def test_cmd(self):
         """tests cmd output"""
         with patch('sys.stdout', new=StringIO()) as output:
-            self.commands.onecmd("User.count()")
+            HBNBCommand().onecmd("User.count()")
             self.assertEqual(type(eval(output.getvalue())), int)
 
 

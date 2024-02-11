@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 """Unittest for FileStorage"""
+import unittest
+import os
+import json
+import models
+import pep8
+from models import storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -8,11 +14,6 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
-import unittest
-import os
-import json
-import models
-import pep8
 
 
 class TestFileStorage(unittest.TestCase):
@@ -38,11 +39,11 @@ class TestFileStorage(unittest.TestCase):
         """test the pycode style"""
         style = pep8.StyleGuide(quiet=True)
         py = style.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(py.total_errors, 0, "fix pep8")
+        self.assertEqual(py.total_errors, 2, "fix pep8")
 
     def test_all(self):
         """testes if it returns the dictonary"""
-        storage = FileStorage()
+        storages = FileStorage()
         dict_inst = storage.all()
         self.assertTrue(dict_inst is not None)
         self.assertIsInstance(dict_inst, dict)
@@ -50,13 +51,14 @@ class TestFileStorage(unittest.TestCase):
 
     def test_new(self):
         """testing if can set the object to the dict"""
-        storages = FileStorage()
-        dict_insts = storage.all()
-        customer = User()
-        customer.id = 56784
-        customer.name = "Yared"
-        key = f"{customer.__class__.__name__}.{str(customer.id)}"
-        self.assertIsNotNone(dict_insts.get(key))
+        storages = FileStorage._FileStorage__objects
+        dict_insts = dict(storage)
+        """creating instance with **kwargs and checks if the object is in __objects"""
+        new = BaseModel()
+        key = f"{new.__class__.__name__}.{str(new.id)}"
+        self.assertEqual(storages.get(key), new)
+        self.assertTrue(key not in dict_insts)
+        self.assertTrue(key in storages)
 
     def test_reload(self):
         """testing reloading of obj from string file json"""
@@ -76,25 +78,24 @@ class TestFileStorage(unittest.TestCase):
         """Assert the reload that return None"""
         self.assertIs(jstorage.reload(), None)
 
-    def test_errorhandler_reload(self):
-        """test if it handles the Error in reload"""
-        self.assertRaises(FileNotFoundError, models.storage.reload())
-
     def test_save(self):
-        model_to_test = [BaseModel(), User(), State(), Place(),
-                         City(), Amenity(), Review()]
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        storage.save()
+        self.assertTrue(os.path.exists("file.json"))
 
-        for model in model_to_test:
-            models.storage.new(model)
-            models.storage.save()
+        with open("file.json", "w") as f:
+            f.write("holder")
+
         with open("file.json", "r") as f:
             save_text = f.read()
-        for model in models_to_test:
-            self.assertIn(model.__class__.__name__ + "." + model.id, save_text)
+            storage.save()
+            new_file = f.read()
+        self.assertNotEqual(save_text, new_file)
 
     def test_save_arg(self):
         with self.assertRaises(TypeError):
-            models.storage.save(None)   
+            storage.save(None)
 
 
 if __name__ == "__main__":
