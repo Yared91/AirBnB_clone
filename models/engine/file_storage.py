@@ -23,7 +23,7 @@ class FileStorage:
     reload(self): it reloads for new entry
     """
 
-    __file_path = file.json
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):

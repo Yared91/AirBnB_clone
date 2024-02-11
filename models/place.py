@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Place Class"""
-import BaseModel
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
