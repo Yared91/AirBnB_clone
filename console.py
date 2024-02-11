@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Console Class"""
 import cmd
+import shlex
+from models import storage
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -50,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 0:
             print("** class name missing **")
             return
-        arg = parse(line)
+        arg = shlex.split(line)
         if arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
@@ -73,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 0:
             print(" ** class name missing **")
             return
-        arg = parse(line)
+        arg = shlex.split(line)
 
         if arg[0] not in HBNBCommand.classes:
             print ("** class doesn't exist **")
@@ -93,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all instances based or not on the class name"""
-        arg = parse(line)
+        arg = shlex.split(line)
         new_list = []
         store = storage.all()
 
@@ -112,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-        arg = parse(line)
+        arg = shlex.split(line)
         store = storage.all()
 
         if len(line) == 0:
