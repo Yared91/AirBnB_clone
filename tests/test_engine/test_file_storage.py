@@ -38,7 +38,7 @@ class TestFileStorage(unittest.TestCase):
         """test the pycode style"""
         style = pep8.StyleGuide(quiet=True)
         py = style.check_files(['models/engine/file_storage.py'])
-        self.assertEquall(py.total_errors, 0, "fix pep8")
+        self.assertEqual(py.total_errors, 0, "fix pep8")
 
     def test_all(self):
         """testes if it returns the dictonary"""
@@ -74,7 +74,7 @@ class TestFileStorage(unittest.TestCase):
             for i in r:
                 self.assertEqual(i, "{}")
         """Assert the reload that return None"""
-        self.assetIs(jstorage.reload(), None)
+        self.assertIs(jstorage.reload(), None)
 
     def test_errorhandler_reload(self):
         """test if it handles the Error in reload"""

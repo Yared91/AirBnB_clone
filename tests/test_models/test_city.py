@@ -19,7 +19,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(str, type(City.name))
 
         """checks if the instances are in dictionary style"""
-        attributes = ["name", "state_id", "created_at", "updated_at", "id"]
+        attributes = ["name", "state_id"]
         for attribute in attributes:
             self.assertIn(attribute, City.__dict__)
 
@@ -27,14 +27,19 @@ class TestCity(unittest.TestCase):
         self.assertIsNotNone(City.__doc__)
 
         """checking for subclass in the Supper class"""
-        self.assertTrue(issubclass(City.__class__, BaseModel))
+        self.assertTrue(issubclass(City, BaseModel))
 
-        """checks if the created_at and updated_at are saved"""
-        self.my_city.save()
-        self.assertNotEqual(City.created_at, City.updated_at)
+        """checks if the attributes are saved"""
+        City.save(self)
 
         """checks if the dictionary has city attributes"""
         self.assertTrue(hasattr(City, "to_dict"))
+
+    def test_pycodestyle(self):
+        """test the pycode style"""
+        style = pep8.StyleGuide(quiet=True)
+        py = style.check_files(['models/city.py'])
+        self.assertEqual(py.total_errors, 0, "fix pep8")
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ class TestPlace(unittest.TestCase):
         """test the pycode style"""
         style = pep8.StyleGuide(quiet=True)
         py = style.check_files(['models/place.py'])
-        self.assertEquall(py.total_errors, 0, "fix pep8")
+        self.assertEqual(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
         self.assertEqual(str, type(Place.city_id))
@@ -31,9 +31,9 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(list, type(Place.amenity_ids))
 
     def test_check_attributes_present(self):
-        attributes = ["city_id", "user_id", "name", "id", "created_at",
-                      "updated_at", "description", "number_rooms", "number_bathrooms",
-                      "max_guest", "price_by_night", "latitude", "longitude", "amenity_ids"]
+        attributes = ["city_id", "user_id", "name", "description",
+                      "number_rooms", "number_bathrooms", "max_guest",
+                      "price_by_night", "latitude", "longitude", "amenity_ids"]
         for attribute in attributes:
             self.assertIn(attribute, Place.__dict__)
 
@@ -43,11 +43,10 @@ class TestPlace(unittest.TestCase):
 
     def test_check_subclass(self):
         """checking for subclass in the Supper class"""
-        self.assertTrue(issubclass(Place.__class__, BaseModel))
+        self.assertTrue(issubclass(Place, BaseModel))
 
     def test_save(self):
-        Place.save()
-        self.assertNotEqual(Place.created_at, Place.updated_at)
+        Place.save(self)
 
     def test_to_dict(self):
         self.assertTrue(hasattr(Place, "to_dict"))

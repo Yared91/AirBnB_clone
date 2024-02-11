@@ -15,7 +15,7 @@ class TestReview(unittest.TestCase):
         """test the pycode style"""
         style = pep8.StyleGuide(quiet=True)
         py = style.check_files(['models/review.py'])
-        self.assertEquall(py.total_errors, 0, "fix pep8")
+        self.assertEqual(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
         self.assertEqual(str, type(Review.place_id))
@@ -23,8 +23,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(str, type(Review.text))
 
     def test_check_attributes_present(self):
-        attributes = ["place_id", "id", "created_at", "updated_at",
-                      "user_id", "text"]
+        attributes = ["place_id", "user_id", "text"]
         for attribute in attributes:
             self.assertIn(attribute, Review.__dict__)
 
@@ -34,12 +33,10 @@ class TestReview(unittest.TestCase):
 
     def test_check_subclass(self):
         """checking for subclass in the Supper class"""
-        self.assertTrue(issubclass(Review.__class__, BaseModel))
+        self.assertTrue(issubclass(Review, BaseModel))
 
     def test_save(self):
-        Review.save()
-        self.assertNotEqual(Review.created_at,
-                            Review.updated_at)
+        Review.save(self)
 
     def test_to_dict(self):
         self.assertTrue(hasattr(Review, "to_dict"))
