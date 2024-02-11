@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
         store = storage.all()
 
         if len(line) == 0:
-            print(" ** class name missing **")
+            print("** class name missing **")
             return
         arg = shlex.split(line)
 
@@ -84,9 +84,8 @@ class HBNBCommand(cmd.Cmd):
         elif len(line) < 2:
             print("** instance id missing **")
             return
-        read = "{}.{}".format(arg[0], arg[1])
 
-        if read not in store.keys():
+        if "{}.{}".format(arg[0], arg[1]) not in store.keys():
             print("** no instance found **")
 
         else:
