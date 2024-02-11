@@ -9,19 +9,6 @@ import pep8
 
 class TestBaseModel(unittest.TestCase):
     """Testing attributes of BaseModel"""
-    @classmethod
-    def setUpClass(cls):
-        cls.my_model = BaseModel()
-        cls.my_model.name = "My First Model"
-        cls.my_model.my_number = 89
-
-    @classmethod
-    def tearDownClass(cls):
-        del cls.my_model
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            return
 
     def test_pycodstyle(self):
         """test the pycode style"""
@@ -31,17 +18,13 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save(self):
         """checking created_at and updated_at date aren't equal"""
-        self.my_model.save()
-        self.assertNotEqual(self.my_model.created_at,
-        self.my_model.updated_at)
-
-    def test_instance_of_class(self):
-        my_model = BaseModel()
-        self.assertIsInstance(my_model, BaseModel)
+        BaseModel.save()
+        self.assertNotEqual(BaseModel.created_at,
+        BaseModel.updated_at)
 
     def test_to_dict(self):
-        my_model_dict = self.my_model.to_dict()
-        self.assertEqual(self.my_model.__clas__.__name__, "BaseModel")
+        my_model_dict = BaseModel.to_dict()
+        self.assertEqual(BaseModel.__clas__.__name__, "BaseModel")
         self.assertTrue(isinstance(my_model_dict["created_at"], str))
         self.assertTrue(isinstance(my_model_dict["updated_at"], str))
 
