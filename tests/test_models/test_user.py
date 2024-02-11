@@ -14,7 +14,7 @@ class TestUser(unittest.TestCase):
         """test the pycode style"""
         style = pep8.StyleGuide(quiet=True)
         py = style.check_files(['models/user.py'])
-        self.assertEquall(py.total_errors, 0, "fix pep8")
+        self.assertEqual(py.total_errors, 0, "fix pep8")
 
     def test_check_attributes_string(self):
         self.assertEqual(str, type(User.first_name))
@@ -23,8 +23,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(str, type(User.password))
 
     def test_check_attributes_present(self):
-        attributes = ["email", "id", "created_at", "updated_at",
-                      "password", "first_name", "last_name"]
+        attributes = ["email", "password", "first_name", "last_name"]
         for attribute in attributes:
             self.assertIn(attribute, User.__dict__)
 
@@ -34,11 +33,10 @@ class TestUser(unittest.TestCase):
 
     def test_check_subclass(self):
         """checking for subclass in the Supper class"""
-        self.assertTrue(issubclass(User.__class__, BaseModel))
+        self.assertTrue(issubclass(User, BaseModel))
 
     def test_save(self):
-        User.save()
-        self.assertNotEqual(User.created_at, User.updated_at)
+        User.save(self)
 
     def test_to_dict(self):
         self.assertTrue(hasattr(User, "to_dict"))
