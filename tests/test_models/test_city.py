@@ -8,51 +8,33 @@ import unittest
 import pep8
 
 
-class TestUser(unittest.TestCase):
+class TestCity(unittest.TestCase):
     """testing City Class"""
-    @classmethod
-    def setUpClass(cls):
-        cls.my_city = City()
-        cls.my_city.id = "AA"
-        cls.my_city.name = "Addis"
 
-    @classmethod
-    def tearDownClass(cls):
-        del cls.my_city
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            return
+    def test_city_subclass(self):
+        """tests city subclass"""
 
-    def test_pycodestyle(self):
-        """test the pycode style"""
-        style = pep8.StyleGuide(quiet=True)
-        py = style.check_files(['models/city.py'])
-        self.assertEquall(py.total_errors, 0, "fix pep8")
+        """checks if the object of city are strings"""
+        self.assertEqual(str, type(City.state_id))
+        self.assertEqual(str, type(City.name))
 
-    def test_check_attributes_string(self):
-        self.assertEqual(str, type(self.my_city.state_id))
-        self.assertEqual(str, type(self.my_city.name))
-
-    def test_check_attributes_present(self):
+        """checks if the instances are in dictionary style"""
         attributes = ["name", "state_id", "created_at", "updated_at", "id"]
         for attribute in attributes:
-            self.assertIn(attribute, self.my_user.__dict__)
+            self.assertIn(attribute, City.__dict__)
 
-    def test_check_func(self):
         """checking if City has Docstring"""
         self.assertIsNotNone(City.__doc__)
 
-    def test_check_subclass(self):
         """checking for subclass in the Supper class"""
-        self.assertTrue(issubclass(self.my_city.__class__, BaseModel))
+        self.assertTrue(issubclass(City.__class__, BaseModel))
 
-    def test_save(self):
+        """checks if the created_at and updated_at are saved"""
         self.my_city.save()
-        self.assertNotEqual(self.my_city.created_at, self.my_city.updated_at)
+        self.assertNotEqual(City.created_at, City.updated_at)
 
-    def test_to_dict(self):
-        self.assertTrue(hasattr(self.my_city, "to_dict"))
+        """checks if the dictionary has city attributes"""
+        self.assertTrue(hasattr(City, "to_dict"))
 
 
 if __name__ == "__main__":
