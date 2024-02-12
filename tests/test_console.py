@@ -121,8 +121,8 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(prints, output.getvalue().strip())
         prints = "** value missing **"
         with patch('sys.stdout', new=StringIO()) as output:
-            self.assertFalse(HBNBCommand()
-                             .onecmd("update BaseModel existing-id first_name"))
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel existing-id
+                                                  first_name"))
             self.assertEqual(prints, output.getvalue().strip())
 
     def test_docstring(self):
