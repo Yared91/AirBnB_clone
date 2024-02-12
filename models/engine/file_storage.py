@@ -52,7 +52,7 @@ class FileStorage:
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         dic_json = {obj: self.__objects[obj].to_dict()
-                for obj in self.__objects.keys()}
+                    for obj in self.__objects.keys()}
         with open(self.__file_path, "w") as f:
             json.dump(dic_json, f)
 
@@ -68,11 +68,12 @@ class FileStorage:
             except Exception:
                 pass
             for k, v in obj_load.items():
-                    attr = v.get("__class__")
-                    subclass = self.get_classes(attr)
+                attr = v.get("__class__")
+                subclass = self.get_classes(attr)
 
-                    if subclass is None:
-                        raise Exception("Error: Invalid class name".format(attr))
+                if subclass is None:
+                    raise Exception("Error: Invalid class name"
+                                    .format(attr))
                     self.__objects[k] = subclass(**v)
         except FileNotFoundError:
             pass

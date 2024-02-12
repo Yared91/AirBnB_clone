@@ -25,9 +25,11 @@ class BaseModel:
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if "created_at" == key:
-                    self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(value,
+                                                           "%Y-%m-%dT%H:%M:%S.%f")
                 elif "updated_at" == key:
-                    self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(value,
+                                                           "%Y-%m-%dT%H:%M:%S.%f")
                 else:
                     self.__dict__[key] = value
         else:
