@@ -21,15 +21,14 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Initializes a new Base id."""
+        time_style = "%Y-%m-%dT%H:%M:%S.%f"
 
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if "created_at" == key:
-                    self.__dict__[key] = datetime.strptime(value,
-                                                           "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(value, time_style)
                 elif "updated_at" == key:
-                    self.__dict__[key] = datetime.strptime(value,
-                                                           "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(value, time_style)
                 else:
                     self.__dict__[key] = value
         else:
