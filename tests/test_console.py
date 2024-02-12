@@ -40,12 +40,10 @@ class TestConsole(unittest.TestCase):
         """testing the create command"""
         with patch('sys.stdout', new=StringIO()) as output:
             HBNBCommand().onecmd('create')
-            self.assertEqual("** class name missing **",
-                             output.getvalue().strip())
+            self.assertEqual("** class name missing **", output.getvalue().strip())
         with patch('sys.stdout', new=StringIO()) as output:
             HBNBCommand().onecmd('create MyClass')
-            self.assertEqual("** class doesn't exist **",
-                             output.getvalue().strip())
+            self.assertEqual("** class doesn't exist **", output.getvalue().strip())
 
     def test_show(self):
         """testing the show command"""
@@ -116,13 +114,11 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(prints, output.getvalue().strip())
         prints = "** attribute name missing **"
         with patch('sys.stdout', new=StringIO()) as output:
-            self.assertFalse(HBNBCommand()
-                             .onecmd("update BaseModel existing-id"))
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel existing-id"))
             self.assertEqual(prints, output.getvalue().strip())
         prints = "** value missing **"
         with patch('sys.stdout', new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("update BaseModel existing-id
-                                                  first_name"))
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel existing-id first_name"))
             self.assertEqual(prints, output.getvalue().strip())
 
     def test_docstring(self):
