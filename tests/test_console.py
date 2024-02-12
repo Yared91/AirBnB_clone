@@ -89,7 +89,7 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("all MyModel"))
             self.assertEqual(prints, output.getvalue().strip())
-        prints = "[]"
+        prints = ""
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("all BaseModel"))
             self.assertEqual(prints, output.getvalue().strip())

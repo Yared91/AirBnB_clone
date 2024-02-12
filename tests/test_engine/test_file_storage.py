@@ -52,12 +52,12 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """testing if can set the object to the dict"""
         storages = FileStorage._FileStorage__objects
-        dict_insts = dict(storage)
+        dict_inst = dict(storage)
         """creating instance with **kwargs and checks if the object is in __objects"""
         new = BaseModel()
         key = f"{new.__class__.__name__}.{str(new.id)}"
         self.assertEqual(storages.get(key), new)
-        self.assertTrue(key not in dict_insts)
+        self.assertTrue(key not in dict_inst)
         self.assertTrue(key in storages)
 
     def test_reload(self):
