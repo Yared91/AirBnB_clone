@@ -84,8 +84,9 @@ class HBNBCommand(cmd.Cmd):
         elif len(line) < 2:
             print("** instance id missing **")
             return
+        new = "{}.{}".format(arg[0], arg[1])
 
-        if "{}.{}".format(arg[0], arg[1]) not in store.keys():
+        if new not in store.keys():
             print("** no instance found **")
 
         else:
